@@ -1,0 +1,32 @@
+Job Title: Junior Backend Engineer — AI Platform
+Company: Parloa GmbH
+Location: Berlin, Germany
+
+About the Role:
+We are looking for a Junior Backend Engineer to join our AI Platform team in Berlin.
+You will build and maintain backend services that power our conversational AI products,
+working closely with ML engineers and product teams.
+
+Responsibilities:
+- Design and implement REST APIs and microservices in Python
+- Integrate LLM APIs (OpenAI, Anthropic) into production backend systems
+- Build and maintain data pipelines for AI model inputs and outputs
+- Write unit and integration tests using pytest
+- Deploy and monitor services using Docker and Kubernetes
+- Collaborate with ML engineers to productionize AI workflows
+
+Requirements:
+- Python proficiency with FastAPI or similar frameworks
+- Experience with PostgreSQL or other relational databases
+- Familiarity with Docker and containerization
+- Experience with LLM APIs or AI integration work
+- Understanding of REST API design principles
+- Git and version control workflows
+- Bonus: LangGraph, LangChain, or other agent frameworks
+- Bonus: AWS or GCP cloud experience
+- Bonus: pgvector or vector database experience
+
+What we offer:
+- Competitive Berlin salary (55,000 - 75,000 EUR)
+- Hybrid work model
+- Small, fast-moving AI-native team

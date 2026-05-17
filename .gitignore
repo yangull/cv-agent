@@ -1,0 +1,12 @@
+# Virtual environment
+venv/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# PDF files — CV and generated outputs are not committed
+*.pdf
+
+# Environment variables
+.env
