@@ -1,4 +1,4 @@
-markdown# cv-agent
+# cv-agent
 
 A LangGraph-powered agentic pipeline that reads a job description, scores it against a CV using Claude AI, rewrites experience bullets tailored to the role, and exports a PDF report.
 
