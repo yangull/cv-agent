@@ -1,10 +1,9 @@
-# nodes/rewrite_bullets.py
-import os
 import json
 import anthropic
 from state import AgentState
+from nodes.utils import strip_code_fences
 
-# Initialize client — reads ANTHROPIC_API_KEY from environment automatically
+# Sonnet for rewriting — produces noticeably better output than Haiku for this task
 client = anthropic.Anthropic()
 
 def rewrite_bullets(state: AgentState) -> AgentState:
@@ -12,8 +11,6 @@ def rewrite_bullets(state: AgentState) -> AgentState:
     cv = state["cv_text"]
     explanation = state["match_explanation"]
 
-    # We use claude-sonnet here because rewriting requires more nuance than scoring
-    # Haiku is fast and cheap for scoring; Sonnet produces better rewritten content
     response = client.messages.create(
         model="claude-sonnet-4-5",
         max_tokens=2048,
@@ -35,24 +32,8 @@ Rules:
         ]
     )
 
-    # Extract raw text from Claude's response
-    raw = response.content[0].text
+    bullets = json.loads(strip_code_fences(response.content[0].text))
 
-    # Strip markdown code fences if Claude wrapped the response in them
-    clean = raw.strip()
-    if clean.startswith("```"):
-        clean = clean.split("\n", 1)[1]
-    if clean.endswith("```"):
-        clean = clean.rsplit("```", 1)[0]
-    clean = clean.strip()
-
-    # Parse the cleaned string as a JSON array
-    bullets = json.loads(clean)
-
-    print(f"✅ rewrite_bullets: got {len(bullets)} rewritten bullets")
-
-    # Print a preview of the first bullet so we can see it working
-    if bullets:
-        print(f"   Preview: {bullets[0][:80]}...")
+    print(f"rewrite_bullets: got {len(bullets)} bullets")
 
     return {"rewritten_bullets": bullets}
