@@ -1,33 +1,34 @@
-# main.py
+import argparse
 from graph import build_graph
 
 def main():
-    # Build the compiled LangGraph pipeline
+    parser = argparse.ArgumentParser(description="Tailor your CV to a job description using Claude.")
+    parser.add_argument("--cv", required=True, help="Path to your CV PDF file")
+    parser.add_argument("--jd", default="sample_jd.txt", help="Path to the job description text file")
+    args = parser.parse_args()
+
     graph = build_graph()
 
-    # Define the initial state — these two paths are the only inputs we provide
-    # Every node after this reads from and writes to this shared state
     initial_state = {
-        "jd_path": "sample_jd.txt",       # the job description text file we created
-        "cv_path": "Can_Ozer_Arpaci_CV_Parloa.pdf",  # your CV PDF
-        "job_description": "",             # will be filled by read_jd node
-        "cv_text": "",                     # will be filled by fetch_cv node
-        "match_score": 0,                  # will be filled by score_match node
-        "match_explanation": "",           # will be filled by score_match node
-        "rewritten_bullets": [],           # will be filled by rewrite_bullets node
-        "output_pdf_path": None            # will be filled by export_pdf node
+        "jd_path": args.jd,
+        "cv_path": args.cv,
+        "job_description": "",
+        "cv_text": "",
+        "match_score": 0,
+        "match_explanation": "",
+        "rewritten_bullets": [],
+        "output_pdf_path": None
     }
 
-    print("🚀 Starting cv-agent pipeline...\n")
+    print("Starting cv-agent pipeline...\n")
 
     # invoke() runs the graph synchronously from start to END
-    # It returns the final state after all nodes have run
     final_state = graph.invoke(initial_state)
 
-    print("\n✅ Pipeline complete!")
-    print(f"   Match score: {final_state['match_score']}/100")
-    print(f"   Bullets generated: {len(final_state['rewritten_bullets'])}")
-    print(f"   Output PDF: {final_state['output_pdf_path']}")
+    print("\nPipeline complete!")
+    print(f"  Match score: {final_state['match_score']}/100")
+    print(f"  Bullets generated: {len(final_state['rewritten_bullets'])}")
+    print(f"  Output PDF: {final_state['output_pdf_path']}")
 
 if __name__ == "__main__":
     main()
